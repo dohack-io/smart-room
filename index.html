@@ -13,38 +13,47 @@
 <body>
     <img src="SlavHome.png">
       
-        <div class="tab">
-                <button class="tab" onclick="openTab(event, 'Übersicht')">Übersicht</button>
-                <button class="tab" onclick="openTab(event, 'Temperaturkurve')">Temperaturkurve</button>
-                <button class="tab" onclick="openTab(event, 'Luftfeuchtigkeit')">Luftfeuchtigkeit</button>
-              </div>
-
-         </div>   
-    
     <h1>
             Wilkommen zur Website von SlavHome Smart Edition 
     </h1>
     <br>
+        <label class="switch"> 
+            <input type="checkbox" onclick="myFunction1()" >
+            <span class="slider round"></span> 
+          
+        </label>
+        
+     <br>   
         <label class="switch">
-            <input type="checkbox">
+            <input type="checkbox" onclick="myFunction2()" >
             <span class="slider round"></span>
         </label>
      <br>   
+        
         <label class="switch">
-            <input type="checkbox">
-            <span class="slider round"></span>
-        </label>
-     <br>   
-        <label class="switch">
-            <input type="checkbox">
+            <input type="checkbox" onclick="myFunction3()" >
             <span class="slider round"></span>
         </label>
      <br>      
         <label class="switch">
-            <input type="checkbox">
+            <input type="checkbox" onclick="myFunction4()" >
             <span class="slider round"></span>
         </label>
-
-  
+     <script>
+            function myFunction1() {
+              document.body.style.backgroundImage = "url('Licht_an-Rollo_oben.png')";
+            }
+            function myFunction2() {
+              document.body.style.backgroundImage = "url('Licht_aus-Rollo_oben.png')";
+            }
+            function myFunction3() {
+              document.body.style.backgroundImage = "url('Licht_aus-Rollo_unten.png')";
+            }
+            function myFunction4() {
+              document.body.style.backgroundImage = "url('Licht_aus-Rollo_oben.png')";
+            }
+     </script>
+        
+        
 </body>
 </html>

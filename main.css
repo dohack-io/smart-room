@@ -1,6 +1,6 @@
 body{
     background-image: url(Licht_aus-Rollo_oben.png);
-    background-color: rgb(202, 207, 211)
+    background-color: rgb(53, 133, 238)
 }
 /*Textdesign of Text 1 */
 h1{
@@ -82,7 +82,7 @@ h1{
 
  /*Stage On color*/
  input:checked + .slider {
-   background-color: #2196F3;
+   background-color: rgb(58, 243, 33);
  }
 
  /*input:focus + .slider {
