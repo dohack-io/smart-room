@@ -1,5 +1,6 @@
 body{
-    background: rgb(61, 214, 0);
+    background-image: url(Licht_aus-Rollo_oben.png);
+    background-color: rgb(202, 207, 211)
 }
 h1{
     font-size: 18px;
