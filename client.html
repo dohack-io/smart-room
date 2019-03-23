@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>Light</title>
+        <script type="text/javascript">
+            function toggle() {
+                var request = new XMLHttpRequest();
+                request.open('GET', '/Toggle', true);
+                request.send();
+            }
+        </script>
+    </head>
+    <body>
+        <p>The example page, served by low.js</p>
+        <p><input type="button" value="Toggle LED" onclick="javascript: toggle()"></p>
+    </body>
+</html>
