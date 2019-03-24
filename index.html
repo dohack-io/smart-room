@@ -5,8 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Smart Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    <script src="main.js"></script>
+    <link rel="stylesheet" href="main.css">
+    <link rel="preload" href="Licht_aus-Rollo_oben.png">
+    <link rel="preload" href="Licht_aus-Rollo_unten.png">
+    <link rel="preload" href="Licht_an-Rollo_oben.png">
+    <link rel="preload" href="Licht_an-Rollo_unten.png">
 </head>
 <style>
 </style>
@@ -17,43 +20,47 @@
             Wilkommen zur Website von SlavHome Smart Edition 
     </h1>
     <br>
-        <label class="switch"> 
-            <input type="checkbox" onclick="myFunction1()" >
-            <span class="slider round"></span> 
-          
-        </label>
-        
-     <br>   
-        <label class="switch">
-            <input type="checkbox" onclick="myFunction2()" >
-            <span class="slider round"></span>
-        </label>
-     <br>   
-        
-        <label class="switch">
-            <input type="checkbox" onclick="myFunction3()" >
-            <span class="slider round"></span>
-        </label>
-     <br>      
-        <label class="switch">
-            <input type="checkbox" onclick="myFunction4()" >
-            <span class="slider round"></span>
-        </label>
-     <script>
-            function myFunction1() {
-              document.body.style.backgroundImage = "url('Licht_an-Rollo_oben.png')";
-            }
-            function myFunction2() {
-              document.body.style.backgroundImage = "url('Licht_aus-Rollo_oben.png')";
-            }
-            function myFunction3() {
-              document.body.style.backgroundImage = "url('Licht_aus-Rollo_unten.png')";
-            }
-            function myFunction4() {
-              document.body.style.backgroundImage = "url('Licht_aus-Rollo_oben.png')";
-            }
-     </script>
-        
+    <label class="switch">
+        <input type="checkbox" onchange="myFunction2()" >
+        <span class="slider round"></span>
+    </label>
+ <br>   
+
+<script>
+    let lightState = false;
+    let blindsState = false; 
+    
+    function myFunction1() {
+        var request = new XMLHttpRequest();
+        request.open('GET', '/light', true);
+        request.send();
+        lightState = !lightState;
+        setBackground();
+    }
+
+    function myFunction2() {
+        var request = new XMLHttpRequest();
+        request.open('GET', '/blinds', true);
+        request.send();
+        blindsState = !blindsState;
+        setBackground();
+    }
+
+    function setBackground() {
+        if (!lightState && !blindsState) {
+            document.body.style.backgroundImage = "url('Licht_aus-Rollo_oben.png')";
+        } 
+        else if (!lightState && blindsState) {
+            document.body.style.backgroundImage = "url('Licht_aus-Rollo_unten.png')";
+        } 
+        else if (lightState && !blindsState) {
+            document.body.style.backgroundImage = "url('Licht_an-Rollo_oben.png')";
+        } 
+        else if (lightState && blindsState) {
+            document.body.style.backgroundImage = "url('Licht_an-Rollo_unten.png')";
+        } 
+    }
+ </script>        
         
 </body>
 </html>
