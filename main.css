@@ -1,20 +1,30 @@
 body{
     background-image: url(Licht_aus-Rollo_oben.png);
-    background-color: rgb(53, 133, 238)
+    background-color: rgb(132, 163, 202);
 }
 /*Textdesign of Text 1 */
 h1{
-    font-size: 18px;
-    color: #000;
-    font-weight: bolder
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    text-align: right;
+    
+}
+.logo{
+display: grid;
+grid-template-columns: auto 1fr auto;
+
+}
+.time{
+  color: blue;
 }
 
 
 /* Configures Button Color */
 .tab {
     overflow: hidden;
-    border: 4px solid rgb(5, 132, 236);
-    background-color: #02e3f3;
+    border: 4px solid rgb(19, 41, 59);
+    background-color: #5d2db8;
   }
   
   /* Configures the Style of Buttons*/
@@ -26,13 +36,15 @@ h1{
     cursor: help;
     padding: 14px 16px;
     transition: 1s;
-    font-size: 18px
+    font-size: 18px;
+    color: #ccc;
     
   }
   
   /* Configure Hover Color */
   .tab button:hover {
-    background-color: rgb(120, 212, 148);
+    background-color: rgb(55, 184, 4);
+    color: black;
   }
  
 
