@@ -3,15 +3,14 @@ let fs = require('fs');
 let gpio = require('gpio');
 let signal = require('signal');
 
-let state = 0;
+let lightState = 0;
 let blindsState = 1000000;
 gpio.pins[16].setType(gpio.INPUT);
+gpio.pins[22].setType(gpio.OUTPUT).setValue(lightState);
 gpio.pins[21].setType(gpio.OUTPUT);
 gpio.pins[21].setValue(0);
-gpio.pins[22].setType(gpio.OUTPUT).setValue(state);
 
 function writeStatic(path, res) {
-    console.log(path);
     fs.readFile('/www/' + path, (err, data) => {
         if (err) {
             res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -34,21 +33,28 @@ function writeStatic(path, res) {
 
 http.createServer((req, res) => {
     if (req.url == '/temp') {
-        res.end();
         gpio.pins[16].getValue(gpio.ANALOG, (err, val) => {
+            let responseText;
             console.log(val);
+            if (val <= 0.50) {
+                responseText = "Dunkel";
+            } else if (val <= 0.80) {
+                responseText = "Mittel";
+            } else if (val > 0.80) {
+                responseText = "Hell";
+            }
             res.writeHead(200, { 'Content-Type': 'text/plain' });
-            res.end(val);
+            res.write(responseText);
+            res.end();
             return;
         })
     } else if (req.url == '/light') {
         res.end();
-        state = !state;
-        gpio.pins[22].setValue(state);
+        lightState = !lightState;
+        gpio.pins[22].setValue(lightState);
     } else if (req.url == '/blinds') {
         res.end();
         signal.send(signal.RESTART, [{index: 21, setEvents: signal.EVENT_1, clearEvents: signal.EVENT_2 | signal.EVENT_3}], [0, blindsState, 20000000]);
-        console.log(blindsState);
         if (blindsState === 1000000) {
             blindsState = 2000000;
         } else {
