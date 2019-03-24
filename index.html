@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Smart Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="main.css">
+    <link rel="preload" href="Licht_aus-Rollo_oben.png">
+    <link rel="preload" href="Licht_aus-Rollo_unten.png">
+    <link rel="preload" href="Licht_an-Rollo_oben.png">
+    <link rel="preload" href="Licht_an-Rollo_unten.png">
+</head>
+
+<body onload="startup()">
+    
+
+  <div class="logo">
+        <img src="SmartHome.png">
+        <h1>
+        <marquee>
+        Wilkommen zur Website von SmartHome Smart Edition
+        </marquee>
+        <div class="time" id="txt"></div>
+       </h1>
+  </div>  
+   
+    <div class="tab">
+        <button class="tab" onclick="openTab(event, 'Übersicht')">Übersicht</button>
+        <button class="tab" onclick="openTab(event, 'Temperaturkurve')">Temperaturkurve</button>
+        <button class="tab" onclick="openTab(event, 'Luftfeuchtigkeit')">Luftfeuchtigkeit</button>
+    </div>
+    
+    <br>
+    <label class="switch">
+        <input type="checkbox" id="lightCheckbox" onchange="light()">
+        <span class="slider round"></span>
+
+    </label>
+    <br>
+    <label class="switch">
+        <input type="checkbox" id="blindsCheckbox" onchange="blinds()">
+        <span class="slider round"></span>
+    </label>
+    <br>
+    <div class="lightning">Umgebungslicht: <span id="ambLight"></span></div>
+
+    <script>
+        let lightState = false;
+        let blindsState = false;
+
+        function startup() {
+            startTime();
+            setCheckboxes();
+        }
+
+        setInterval(getTemp, 500);
+
+        function startTime() {
+          var today = new Date();
+          var h = today.getHours();
+          var m = today.getMinutes();
+          var s = today.getSeconds();
+          m = checkTime(m);
+          s = checkTime(s);
+          document.getElementById('txt').innerHTML =
+          h + ":" + m + ":" + s;
+          var t = setTimeout(startTime, 500);
+        }
+
+        function checkTime(i) {
+          if (i < 10) {i = "0" + i};
+          return i;
+        }
+
+        function setCheckboxes() {
+            document.getElementById("lightCheckbox").checked = false;
+            document.getElementById("blindsCheckbox").checked = false;
+        }
+
+        function light() {
+            var request = new XMLHttpRequest();
+            request.open('GET', '/light', true);
+            request.send();
+            lightState = !lightState;
+            setBackground();
+        }
+
+        function blinds() {
+            var request = new XMLHttpRequest();
+            request.open('GET', '/blinds', true);
+            request.send();
+            blindsState = !blindsState;
+            setBackground();
+        }
+
+        function setBackground() {
+            if (!lightState && !blindsState) {
+                document.body.style.backgroundImage = "url('Licht_aus-Rollo_oben.png')";
+            } else if (!lightState && blindsState) {
+                document.body.style.backgroundImage = "url('Licht_aus-Rollo_unten.png')";
+            } else if (lightState && !blindsState) {
+                document.body.style.backgroundImage = "url('Licht_an-Rollo_oben.png')";
+            } else if (lightState && blindsState) {
+                document.body.style.backgroundImage = "url('Licht_an-Rollo_unten.png')";
+            }
+        }
+
+        function getTemp() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("ambLight").innerText = this.responseText;
+                }
+            };
+            xhttp.open("GET", "/temp", true);
+            xhttp.send();
+        }
+    </script>
+
+</body>
+
+</html>
