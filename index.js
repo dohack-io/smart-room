@@ -1,9 +1,13 @@
 let http = require('http');
 let fs = require('fs');
 let gpio = require('gpio');
+let signal = require('signal');
 
 let state = 0;
+let blindsState = 1000000;
 gpio.pins[16].setType(gpio.INPUT);
+gpio.pins[21].setType(gpio.OUTPUT);
+gpio.pins[21].setValue(0);
 gpio.pins[22].setType(gpio.OUTPUT).setValue(state);
 
 function writeStatic(path, res) {
@@ -41,6 +45,15 @@ http.createServer((req, res) => {
         res.end();
         state = !state;
         gpio.pins[22].setValue(state);
+    } else if (req.url == '/blinds') {
+        res.end();
+        signal.send(signal.RESTART, [{index: 21, setEvents: signal.EVENT_1, clearEvents: signal.EVENT_2 | signal.EVENT_3}], [0, blindsState, 20000000]);
+        console.log(blindsState);
+        if (blindsState === 1000000) {
+            blindsState = 2000000;
+        } else {
+            blindsState = 1000000;
+        }
     } else {
         writeStatic(req.url == '/' ? '/index.html' : req.url, res);
     }
