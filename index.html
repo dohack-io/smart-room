@@ -12,25 +12,8 @@
     <link rel="preload" href="Licht_an-Rollo_oben.png">
     <link rel="preload" href="Licht_an-Rollo_unten.png">
 </head>
-<script>
-        function startTime() {
-          var today = new Date();
-          var h = today.getHours();
-          var m = today.getMinutes();
-          var s = today.getSeconds();
-          m = checkTime(m);
-          s = checkTime(s);
-          document.getElementById('txt').innerHTML =
-          h + ":" + m + ":" + s;
-          var t = setTimeout(startTime, 500);
-        }
-        function checkTime(i) {
-          if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-          return i;
-        }
-        </script>
 
-<body onload="startTime()">
+<body onload="startup()">
     
 
   <div class="logo">
@@ -49,13 +32,13 @@
     
     <br>
     <label class="switch">
-        <input type="checkbox" onchange="myFunction1()">
+        <input type="checkbox" id="lightCheckbox" onchange="light()">
         <span class="slider round"></span>
 
     </label>
     <br>
     <label class="switch">
-        <input type="checkbox" onchange="myFunction2()">
+        <input type="checkbox" id="blindsCheckbox" onchange="blinds()">
         <span class="slider round"></span>
     </label>
     <br>
@@ -64,7 +47,34 @@
         let lightState = false;
         let blindsState = false;
 
-        function myFunction1() {
+        function startup() {
+            startTime();
+            setCheckboxes();
+        }
+
+        function startTime() {
+          var today = new Date();
+          var h = today.getHours();
+          var m = today.getMinutes();
+          var s = today.getSeconds();
+          m = checkTime(m);
+          s = checkTime(s);
+          document.getElementById('txt').innerHTML =
+          h + ":" + m + ":" + s;
+          var t = setTimeout(startTime, 500);
+        }
+
+        function checkTime(i) {
+          if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+          return i;
+        }
+
+        function setCheckboxes() {
+            document.getElementById("lightCheckbox").checked = false;
+            document.getElementById("blindsCheckbox").checked = false;
+        }
+
+        function light() {
             var request = new XMLHttpRequest();
             request.open('GET', '/light', true);
             request.send();
@@ -72,7 +82,7 @@
             setBackground();
         }
 
-        function myFunction2() {
+        function blinds() {
             var request = new XMLHttpRequest();
             request.open('GET', '/blinds', true);
             request.send();
