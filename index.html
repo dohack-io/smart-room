@@ -18,8 +18,10 @@
 
   <div class="logo">
         <img src="SmartHome.png">
-       <h1>
+        <h1>
+        <marquee>
         Wilkommen zur Website von SmartHome Smart Edition
+        </marquee>
         <div class="time" id="txt"></div>
        </h1>
   </div>  
@@ -42,6 +44,7 @@
         <span class="slider round"></span>
     </label>
     <br>
+    <div class="lightning">Umgebungslicht: <span id="ambLight"></span></div>
 
     <script>
         let lightState = false;
@@ -51,6 +54,8 @@
             startTime();
             setCheckboxes();
         }
+
+        setInterval(getTemp, 500);
 
         function startTime() {
           var today = new Date();
@@ -65,7 +70,7 @@
         }
 
         function checkTime(i) {
-          if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+          if (i < 10) {i = "0" + i};
           return i;
         }
 
@@ -100,6 +105,17 @@
             } else if (lightState && blindsState) {
                 document.body.style.backgroundImage = "url('Licht_an-Rollo_unten.png')";
             }
+        }
+
+        function getTemp() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("ambLight").innerText = this.responseText;
+                }
+            };
+            xhttp.open("GET", "/temp", true);
+            xhttp.send();
         }
     </script>
 
