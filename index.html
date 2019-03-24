@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,54 +14,63 @@
 </head>
 <style>
 </style>
+
 <body>
     <img src="SlavHome.png">
-      
+    <div class="tab">
+        <button class="tab" onclick="openTab(event, 'Übersicht')">Übersicht</button>
+        <button class="tab" onclick="openTab(event, 'Temperaturkurve')">Temperaturkurve</button>
+        <button class="tab" onclick="openTab(event, 'Luftfeuchtigkeit')">Luftfeuchtigkeit</button>
+    </div>
     <h1>
-            Wilkommen zur Website von SlavHome Smart Edition 
+        Wilkommen zur Website von SlavHome Smart Edition
     </h1>
     <br>
     <label class="switch">
-        <input type="checkbox" onchange="myFunction2()" >
+        <input type="checkbox" onchange="myFunction1()">
+        <span class="slider round"></span>
+
+    </label>
+    <br>
+    <label class="switch">
+        <input type="checkbox" onchange="myFunction2()">
         <span class="slider round"></span>
     </label>
- <br>   
+    <br>
 
-<script>
-    let lightState = false;
-    let blindsState = false; 
-    
-    function myFunction1() {
-        var request = new XMLHttpRequest();
-        request.open('GET', '/light', true);
-        request.send();
-        lightState = !lightState;
-        setBackground();
-    }
+    <script>
+        let lightState = false;
+        let blindsState = false;
 
-    function myFunction2() {
-        var request = new XMLHttpRequest();
-        request.open('GET', '/blinds', true);
-        request.send();
-        blindsState = !blindsState;
-        setBackground();
-    }
+        function myFunction1() {
+            var request = new XMLHttpRequest();
+            request.open('GET', '/light', true);
+            request.send();
+            lightState = !lightState;
+            setBackground();
+        }
 
-    function setBackground() {
-        if (!lightState && !blindsState) {
-            document.body.style.backgroundImage = "url('Licht_aus-Rollo_oben.png')";
-        } 
-        else if (!lightState && blindsState) {
-            document.body.style.backgroundImage = "url('Licht_aus-Rollo_unten.png')";
-        } 
-        else if (lightState && !blindsState) {
-            document.body.style.backgroundImage = "url('Licht_an-Rollo_oben.png')";
-        } 
-        else if (lightState && blindsState) {
-            document.body.style.backgroundImage = "url('Licht_an-Rollo_unten.png')";
-        } 
-    }
- </script>        
-        
+        function myFunction2() {
+            var request = new XMLHttpRequest();
+            request.open('GET', '/blinds', true);
+            request.send();
+            blindsState = !blindsState;
+            setBackground();
+        }
+
+        function setBackground() {
+            if (!lightState && !blindsState) {
+                document.body.style.backgroundImage = "url('Licht_aus-Rollo_oben.png')";
+            } else if (!lightState && blindsState) {
+                document.body.style.backgroundImage = "url('Licht_aus-Rollo_unten.png')";
+            } else if (lightState && !blindsState) {
+                document.body.style.backgroundImage = "url('Licht_an-Rollo_oben.png')";
+            } else if (lightState && blindsState) {
+                document.body.style.backgroundImage = "url('Licht_an-Rollo_unten.png')";
+            }
+        }
+    </script>
+
 </body>
+
 </html>
